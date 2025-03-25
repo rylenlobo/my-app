@@ -50,9 +50,11 @@ export const htmlToAnsi = (
         (match: string, text: string) => `\x1b[4m${text}\x1b[0m`
       )
       // Handle <br> tags (Newlines)
-      .replace(/<br\s*\/?>/g, "\n")
+      .replace(/<br\s*\/?\>/g, "\n")
       // Remove <p> tags (handles multiline content)
       .replace(/<p>([\s\S]*?)<\/p>/g, "$1")
+      // Remove any remaining <span> tags
+      .replace(/<\/?span[^>]*>/g, "")
       // Handle standalone newlines
       .replace(/\n/g, "\n") +
     "\n```"
